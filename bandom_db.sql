@@ -32,13 +32,11 @@ CREATE TABLE IF NOT EXISTS bands (
 
 CREATE TABLE IF NOT EXISTS forums (
   thread_id int(11) NOT NULL AUTO_INCREMENT,
-  user_id int(11) NOT NULL,
   band_id int(11) NOT NULL,
   thread_title varchar(50) NOT NULL,
   PRIMARY KEY (thread_id),
   KEY `band_id` (band_id),
-  KEY `user_id` (user_id),
-  FOREIGN KEY (user_id) REFERENCES users(user_id)
+  FOREIGN KEY (band_id) REFERENCES bands(band_id)
 ) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS posts (
