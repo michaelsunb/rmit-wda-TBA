@@ -1,18 +1,16 @@
-Installation
-============
-git clone https://github.com/rmit-wda/TBA.git
+##Installation:
+- git clone https://github.com/rmit-wda/TBA.git
+- sudo chown www-data -R TBA/Forums/app/tmp/
+- mysql -u root -p bandom_db < bandom_db.sql
+- rename TBA/Forums/app/Config/database.php.default to database.php
 
-sudo chown www-data -R TBA/Forums/app/tmp/
+In TBA/Forums/app/Config/database.php
+- edit login / password = webadmin / ????
+- edit database to bandom_db
 
-Upload bandom_db.sql to mysql, either using phpmyadmin or mysql.
-
-And rename database.php.default to database.php
-
-In database.php
-
-edit login / password = webadmin / ????
-
-edit database to bandom_db
+In TBA/Forums/app/Config/core.php
+- edit Security.salt with alphanumerals
+- edit Security.cipherSeed with numbers
 
 CakePHP
 =======
