@@ -1,7 +1,7 @@
 ##Installation:
 - git clone https://github.com/rmit-wda/TBA.git
 - sudo chown www-data -R TBA/Forums/app/tmp/
-- mysql -u root -p bandom_db < bandom_db.sql
+- mysql -u root -p < bandom_db.sql
 - rename TBA/Forums/app/Config/database.php.default to database.php
 
 In TBA/Forums/app/Config/database.php
