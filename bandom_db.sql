@@ -15,11 +15,19 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS user_subs (
   user_id int(11) NOT NULL,
   band_id int(11) NOT NULL,
-  user_role varchar(50) NOT NULL,
+  role_id int(11) NOT NULL,
   KEY `band_id` (band_id),
   KEY `user_id` (user_id),
+  KEY `role_id` (role_id),
   FOREIGN KEY (user_id) REFERENCES users(user_id),
-  FOREIGN KEY (band_id) REFERENCES bands(band_id)
+  FOREIGN KEY (band_id) REFERENCES bands(band_id),
+  FOREIGN KEY (role_id) REFERENCES roles(role_id)
+) ENGINE=MyISAM;
+
+CREATE TABLE IF NOT EXISTS roles (
+  role_id int(11) NOT NULL AUTO_INCREMENT,
+  role varchar(50) NOT NULL,
+  PRIMARY KEY (role_id)
 ) ENGINE=MyISAM;
 
 CREATE TABLE IF NOT EXISTS bands (
