@@ -1,0 +1,11 @@
+*
+!.gitignore
+/cache/models/*
+/cache/persistent/*
+/cache/persistent/*
+/cache/persistent/*
+/cache/views/*
+/logs/*
+/logs/*
+/sessions/*
+/tests/*
