@@ -26,7 +26,7 @@
 <body>
    <div class="header" style="width:100%; float:left">
       <div class="width900">
-         <a href="<? echo $this->here; ?>">
+         <a href="<? echo Router::url('/', true); ?>">
             <div style="float:left; width: 400px;"> 
                <h2>Bandom</h2>
                <div class="header-left">
