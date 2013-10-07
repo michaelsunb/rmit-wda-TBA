@@ -17,7 +17,7 @@
    <?php
       echo $this->fetch('meta');
       echo $this->Html->css('styles.css');
-      echo $this->Html->css('jquery.js');
+      echo $this->Html->script('validate.js');
 	?>
    
    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
