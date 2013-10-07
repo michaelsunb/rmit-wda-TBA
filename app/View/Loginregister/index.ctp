@@ -21,7 +21,7 @@
          <input type="submit" id="loginPhp" value="Login"/>
       </p>
    </form>
-</div>            
+</div>
 <div class="list-container-side">
    <!--Form for registering -->	
    <?php echo $this->Form->create('User', array('url' => array('controller'=>'loginregister','action' => 'add'))); ?>
@@ -47,9 +47,10 @@
                                                               'id'=>'registerPasswordConfirm',
                                                               'name'=>'registerPasswordConfirm',
                                                               'label' => false)); ?>
+      <span id="registerPasswordConfirmError" style="color:red"></span>
    </p>
    <!--registerJs is visible when javascript is enabled-->
-   <input type="button" id="registerJs" value="Register" onclick="registerUser()"; style="display:none"/>
+   <input type="button" id="registerJs" value="Register" onclick="registerUser();" style="display:none"/>
    <!--registerPhp is visible when javascript is disabled-->
    <?= $this->Form->input('Register', array('type'=>'submit','id'=>'registerPhp','label' => false)); ?>
    <?= $this->Form->end(); ?>
