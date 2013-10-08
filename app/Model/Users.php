@@ -16,16 +16,12 @@ class Users extends AppModel {
    }
 
    public function beforeSave($options = array()) {
-     // if (isset($this->data[$this->alias]['password'])) {
-          $this->data[$this->alias]['password'] = AuthComponent::password($this->data[$this->alias]['password']);
-          return true;
-     // }else{
-     //     return false;
-     // }
+        $this->data[$this->alias]['password'] = AuthComponent::password($this->data[$this->alias]['password']);
+        return true;
    }
 
    public $validate = array(
-      'screen_name' => array(
+      'username' => array(
          'required' => array(
             'rule' => array('notEmpty'),
             'message' => 'You must enter a username'

@@ -29,7 +29,7 @@ class LoginregisterController extends AppController {
          $this->loadModel('Users');
          $this->Users->create();
          $data = array('user_email' => $this->request->data['registerEmail'],
-                        'screen_name' => $this->request->data['registerUsername'],
+                        'username' => $this->request->data['registerUsername'],
                         'password' => $this->request->data['registerPassword'],
                         'registerPasswordConfirm' => $this->request->data['registerPassword']);
          if ($this->Users->save($data,true)) {
