@@ -5,8 +5,8 @@ USE bandom_db;
 CREATE TABLE IF NOT EXISTS users (
   user_id int(11) NOT NULL AUTO_INCREMENT,
   user_email varchar(255) NOT NULL,
-  screen_name varchar(50) NOT NULL,
-  `password` char(128) NOT NULL,
+  username varchar(50) NOT NULL,
+  password char(128) NOT NULL,
   f_name varchar(50) NOT NULL,
   l_name varchar(50) NOT NULL,
   PRIMARY KEY (user_id)

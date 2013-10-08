@@ -111,13 +111,16 @@ CakeLog::config('error', array(
 // include the Session Component to our application
 App::uses('CakeSession', 'Model/Datasource');
  
+
 // now create new SessionComponent instance
 //$Session = new SessionComponent();
  
 // check if the user logged in
+//print_r(CakeSession::read('Auth.User.username'));
+//var_dump($_SESSION);
 if (CakeSession::read('Auth.User.id')) {
     // set the default routing to submissions controller
-    Configure::write('Route.default', array('controller' => 'pages', 'action' => 'home'));
+    Configure::write('Route.default', array('controller' => 'users', 'action' => 'index',CakeSession::read('Auth.User.username')));
 }
 // nope, user not logged in
 else {

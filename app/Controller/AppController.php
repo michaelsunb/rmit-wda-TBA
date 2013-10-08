@@ -35,13 +35,25 @@ class AppController extends Controller {
 
     public $components = array(
         'Session',
-        'Auth' => array(
-            'loginRedirect' => array('controller' => 'posts', 'action' => 'index'),
-            'logoutRedirect' => array('controller' => 'pages', 'action' => 'display', 'home')
-        )
+        'Auth' =>
+           array(
+              'authenticate' => array(
+                  'Form' => array(
+                      'userModel' => 'Users',
+                      'fields' => array(
+                          'username' => 'username',
+                          'password' => 'password'
+                      )
+                  )
+       	       )
+            ),
+//            'loginRedirect' => array('controller' => 'loginregister', 'action' => 'index'),
+//            'logoutRedirect' => array('controller' => 'users', 'action' => 'login')
+        
     );
 
     public function beforeFilter() {
-        $this->Auth->allow('index', 'view');
+	$this->Auth->allow('index', 'view');
+        $this->Auth->allow('loginregister', 'add');
     }
 }
