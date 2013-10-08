@@ -19,6 +19,8 @@
          <input type="button" id="loginJs" value="Login" onclick="loginUser()" style="display:none"/>
          <!--loginPhp is visible when javascript is disabled-->
          <input type="submit" id="loginPhp" value="Login"/>
+         <!-- <a href="<?php echo Router::url('/', true) . 'loginregister/login'; ?>">login</a>
+         <a href="<?php echo Router::url('/', true) . 'loginregister/logout'; ?>">logout</a> -->
       </p>
    </form>
 </div>

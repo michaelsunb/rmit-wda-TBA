@@ -1,6 +1,6 @@
 <?
 App::uses('AuthComponent', 'Controller/Component');
-class User extends AppModel {
+class Users extends AppModel {
 
    function equalToField($field=array(),$compare_field=null) {
       foreach($field as $key=>$value){

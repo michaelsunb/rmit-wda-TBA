@@ -16,7 +16,7 @@ class LoginregisterController extends AppController {
    }
 
    public function view($id = null) {
-      $this->loadModel('User');
+      $this->loadModel('Users');
       $this->User->id = $id;
       if (!$this->User->exists()) {
          throw new NotFoundException(__('Invalid user'));
@@ -26,7 +26,7 @@ class LoginregisterController extends AppController {
 
    public function add() {
       if ($this->request->is('post')) {
-         $this->loadModel('User');
+         $this->loadModel('Users');
          $this->User->create();
          $data = array('user_email' => $this->request->data['registerEmail'],
                         'screen_name' => $this->request->data['registerUsername'],

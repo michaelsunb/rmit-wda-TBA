@@ -26,11 +26,7 @@
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/View/Pages/home.ctp)...
  */
-   /**
-    * TODO: show user page if logged in.
-    */
-	Router::connect('/', array('controller' => 'loginregister', 'action' => 'index', 'add'));
-	Router::connect('/register', array('controller' => 'loginregister', 'action' => 'add'));
+    Router::connect('/', Configure::read('Route.default'));
 /**
  * ...and connect the rest of 'Pages' controller's urls.
  */
