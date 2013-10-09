@@ -49,7 +49,6 @@ class AppController extends Controller {
             ),
 //            'loginRedirect' => array('controller' => 'loginregister', 'action' => 'index'),
 //            'logoutRedirect' => array('controller' => 'users', 'action' => 'login')
-        
     );
 
     public function beforeFilter() {
