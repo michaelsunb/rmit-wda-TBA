@@ -27,7 +27,6 @@ class Users extends AppModel {
 	        return true;
 	}
 	return false;
-	//print_r($this->data[$this->alias]);
    }
 
    public $validate = array(
