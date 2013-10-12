@@ -26,15 +26,15 @@ class LoginregisterController extends AppController {
 
    public function add() {
       if ($this->request->is('post')) {
-         $this->loadModel('Users');
-         $this->Users->create();
+         $this->loadModel('User');
+         $this->User->create();
          $data = array('user_email' => $this->request->data['registerEmail'],
                         'username' => $this->request->data['registerUsername'],
                         'password' => $this->request->data['registerPassword'],
                         'registerPasswordConfirm' => $this->request->data['registerPassword']);
-         if ($this->Users->save($data,true)) {
+         if ($this->User->save($data,true)) {
             $this->Session->setFlash(__('The user has been saved'));
-            return ;//$this->redirect(array('controller'=>'index','action' => 'index'));
+            return $this->redirect(array('controller'=>'index','action' => 'index'));
          }
          $this->Session->setFlash(__('The user could not be saved. Please, try again.'));
       }

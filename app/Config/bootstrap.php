@@ -120,7 +120,7 @@ App::uses('CakeSession', 'Model/Datasource');
 //var_dump($_SESSION);
 if (CakeSession::read('Auth.User.id')) {
     // set the default routing to submissions controller
-    Configure::write('Route.default', array('controller' => 'users', 'action' => 'index',CakeSession::read('Auth.User.username')));
+    Configure::write('Route.default', array('controller' => 'users', 'action' => 'index',CakeSession::read('Auth.User.id')));
 }
 // nope, user not logged in
 else {

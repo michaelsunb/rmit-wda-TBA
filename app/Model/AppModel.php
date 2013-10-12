@@ -67,13 +67,13 @@ class AppModel extends Model {
 
         // Run the quer
         if ($this->hasAny($query))
-	{
+        {
             // $this->invalidate('unique_'.$field)
             return false;
         }
         else
-	{
+        {
             return true;
-	}
+        }
     }
 }
