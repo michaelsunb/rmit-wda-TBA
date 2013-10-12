@@ -42,7 +42,7 @@
          <form name="search" action="search.php" method="get">
            <ul>
                <li class='active'>
-               <span style="padding-left:270px;">
+               <span style="padding-left:5px;">
                   <input type="text" name="searchBar"/>
                </span>
             </li>
@@ -53,25 +53,34 @@
             </li>
            </ul>
          </form>
-         <form name="login" action="login.php" method="get">	
+         <? if(!$authUser): ?>
+         <?= $this->Form->create('User', array('id'=>'login', 'url'=>array('controller'=>'users','action'=>'login'))); ?>	
            <ul>	
             <li>
-               <span style="padding-left:15px;">
-                  <input type="text" name="email" value="Email"/>
+               <span style="padding-left:250px;">
+                  <?= $this->Form->input('user', array('name'=>'user',
+                     'value'=>'Username','label' => false, 'div' => false)); ?>
                </span>
             </li>
             <li>
                <span>
-                  <input type="text" name="pass" value="Password"/>
+                  <?= $this->Form->input('pass', array('type'=>'password', 'name'=>'pass',
+                     'value'=>'password','label' => false, 'div' => false)); ?>
                </span>
             </li>
             <li class='last'>
                <span class = 'button'>
-                  <input name = "login" type="submit" value="Log-in"/>
+                  <? $options = array('label'=>'Log-in','name'=>'login','div' => false);; ?>
+                  <?= $this->Form->end($options); ?>
                </span>
             </li>			
-               </ul>
-             </form>
+            </ul>
+          </form>
+         <? else: ?>
+            <span style="padding-left:550px;"><?= $this->Html->link(
+                        'Log Out',array('controller' => 'users'
+                            ,'action' => 'logout'));?></span>
+         <? endif; ?>
          </div>
       </div>
    </div>

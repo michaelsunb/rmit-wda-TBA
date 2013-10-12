@@ -1,4 +1,3 @@
-     
 <div class="list-container-side">
    <!--Form for registering -->	
    <?php echo $this->Form->create('User', array('url' => array('controller'=>'loginregister','action' => 'add'))); ?>
@@ -26,7 +25,7 @@
                                                               'label' => false)); ?>
    </p>
    <!--registerJs is visible when javascript is enabled-->
-   <input type="button" id="registerJs" value="Register" onclick="registerUser()"; style="display:none"/>
+   <input type="button" id="registerJs" value="Register" onclick="return registerUser()"; style="display:none"/>
    <!--registerPhp is visible when javascript is disabled-->
    <?= $this->Form->input('Register', array('type'=>'submit','id'=>'registerPhp','label' => false)); ?>
    <?= $this->Form->end(); ?>
