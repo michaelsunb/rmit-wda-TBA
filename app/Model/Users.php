@@ -16,17 +16,17 @@ class Users extends AppModel {
    }
 
    public function beforeSave($options = array()) {
-	$users = $this->data[$this->alias];
-	unset($users['registerPasswordConfirm']);
+      $users = $this->data[$this->alias];
+      unset($users['registerPasswordConfirm']);
 
-	if($this->isUnique($users,'user_email') &&
-		$this->isUnique($users,'username'))
-	{
-        	$this->data[$this->alias]['password'] = 
-			AuthComponent::password($this->data[$this->alias]['password']);
-	        return true;
-	}
-	return false;
+      if($this->isUnique($users,'user_email') &&
+         $this->isUnique($users,'username'))
+      {
+            $this->data[$this->alias]['password'] = 
+            AuthComponent::password($this->data[$this->alias]['password']);
+              return true;
+      }
+      return false;
    }
 
    public $validate = array(
