@@ -39,16 +39,18 @@
    <div class="menubar">
       <div class="width900">
          <div id='cssmenu'>
-         <form name="search" action="search.php" method="get">
+         <?= $this->Form->create('Search', array('type' => 'get','url'=>array('controller'=>'bands','action'=>'search')
+            )); ?>
            <ul>
                <li class='active'>
                <span style="padding-left:5px;">
-                  <input type="text" name="searchBar"/>
+                  <?= $this->Form->input('search', array('type'=>'text','label' => false, 'div' => false)); ?>
                </span>
             </li>
             <li>
                <span class = 'button'>
-                  <input name = "search" type="submit" value="Search"/>
+                  <? $options = array('label'=>'Search','div' => false); ?>
+                  <?= $this->Form->end($options); ?>
                </span>
             </li>
            </ul>
@@ -57,20 +59,22 @@
          <?= $this->Form->create('User', array('id'=>'login', 'url'=>array('controller'=>'users','action'=>'login'))); ?>	
            <ul>	
             <li>
-               <span style="padding-left:250px;">
+               <span style="padding-left:259px;color:white;">
+                  User: 
                   <?= $this->Form->input('user', array('name'=>'user',
-                     'value'=>'Username','label' => false, 'div' => false)); ?>
+                     'size'=>'10','label' => false, 'div' => false)); ?>
                </span>
             </li>
             <li>
-               <span>
+               <span style="color:white;">
+                  Pass:
                   <?= $this->Form->input('pass', array('type'=>'password', 'name'=>'pass',
-                     'value'=>'password','label' => false, 'div' => false)); ?>
+                     'size'=>'10','label' => false, 'div' => false)); ?>
                </span>
             </li>
             <li class='last'>
                <span class = 'button'>
-                  <? $options = array('label'=>'Log-in','name'=>'login','div' => false);; ?>
+                  <? $options = array('label'=>'Log-in','name'=>'login','div' => false); ?>
                   <?= $this->Form->end($options); ?>
                </span>
             </li>			
@@ -78,8 +82,9 @@
           </form>
          <? else: ?>
             <span style="padding-left:550px;"><?= $this->Html->link(
-                        'Log Out',array('controller' => 'users'
-                            ,'action' => 'logout'));?></span>
+                  __('Log Out', true),array('controller' => 'users',
+                  'action' => 'logout')
+                  , array('style' => 'color:white;'));?></span>
          <? endif; ?>
          </div>
       </div>

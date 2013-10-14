@@ -67,7 +67,12 @@ if($band['Band']['official_site'] or $band['Band']['twitter']
 </div>
 <?php } ?>
 <div class="forum-container">
-   <h3>Band Forum</h3>
+   <h3>Band Forum - <?=
+   $this->Html->link("Create Thread", array(
+      'controller' => 'forums',
+      'action' => 'create',
+      $band['Band']['id']));?></h3>
+
    <?php
    foreach ($band['Forum'] as $forum)
    {
@@ -96,8 +101,3 @@ if($band['Band']['official_site'] or $band['Band']['twitter']
    }
    ?>
 </div>
-<?php echo $this->Html->link("Create Thread", array(
-   'controller' => 'forums',
-   'action' => 'create',
-   $band['Band']['id'])
-   ); ?>
