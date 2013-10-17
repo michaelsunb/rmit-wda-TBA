@@ -39,7 +39,7 @@ class AppController extends Controller {
            array(
               'authenticate' => array(
                   'Form' => array(
-                      'userModel' => 'User',
+                      'userModel' => 'Users',
                       'fields' => array(
                           'username' => 'username',
                           'password' => 'password'
@@ -49,11 +49,11 @@ class AppController extends Controller {
             ),
 //            'loginRedirect' => array('controller' => 'loginregister', 'action' => 'index'),
 //            'logoutRedirect' => array('controller' => 'users', 'action' => 'login')
+        
     );
 
     public function beforeFilter() {
 	$this->Auth->allow('index', 'view');
         $this->Auth->allow('loginregister', 'add');
-        $this->set('authUser', $this->Auth->user());
     }
 }
