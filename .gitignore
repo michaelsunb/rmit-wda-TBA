@@ -1,2 +1,7 @@
 /app/Config/database.php
 /app/Config/core.php
+/app/webroot/js/*.js
+!/app/webroot/js/jquery.js
+!/app/webroot/js/validateAddBand.js
+!/app/webroot/js/validateLoginReg.js
+

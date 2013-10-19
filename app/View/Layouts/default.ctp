@@ -17,7 +17,10 @@
    <?php
       echo $this->fetch('meta');
       echo $this->Html->css('styles.css');
-      echo $this->Html->script('validate.js');
+
+		echo $scripts_for_layout;
+		
+		echo $this->Js->writeBuffer(array('cache'=>TRUE));
 	?>
    
    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
@@ -48,26 +51,24 @@
                </span>
             </li>
             <li>
-               <span class = 'button'>
+               <span class='button'>
                   <? $options = array('label'=>'Search','div' => false); ?>
                   <?= $this->Form->end($options); ?>
                </span>
             </li>
            </ul>
-         </form>
          <? if(!$authUser): ?>
-         <?= $this->Form->create('User', array('id'=>'login', 'url'=>array('controller'=>'users','action'=>'login'))); ?>	
+         <?= $this->Form->create('User', array('id'=>'login', 'url'=>array('controller'=>'users','action'=>'login'))); ?>
            <ul>	
             <li>
-               <span style="padding-left:259px;color:white;">
-                  User: 
+               <span style="padding-left:340px;color:white;">
                   <?= $this->Form->input('user', array('name'=>'user',
-                     'size'=>'10','label' => false, 'div' => false)); ?>
+                     'size'=>'10','label' => false, 'div' => false,
+                     'value'=>'Username')); ?>
                </span>
             </li>
             <li>
                <span style="color:white;">
-                  Pass:
                   <?= $this->Form->input('pass', array('type'=>'password', 'name'=>'pass',
                      'size'=>'10','label' => false, 'div' => false)); ?>
                </span>
@@ -77,14 +78,17 @@
                   <? $options = array('label'=>'Log-in','name'=>'login','div' => false); ?>
                   <?= $this->Form->end($options); ?>
                </span>
-            </li>			
+            </li>
             </ul>
-          </form>
          <? else: ?>
+            <ul>
+               <li>
             <span style="padding-left:550px;"><?= $this->Html->link(
                   __('Log Out', true),array('controller' => 'users',
                   'action' => 'logout')
                   , array('style' => 'color:white;'));?></span>
+               </li>
+            </ul>
          <? endif; ?>
          </div>
       </div>
@@ -99,43 +103,38 @@
          </div>
       </div>
    </div>
-   <div class="footer" style="width:100%; float:left; margin-top:20px;">
-      <div class="links">
-         <div class="width900">
-            <div class="category">
-               <div class="title">Search</div>
-               <ul>
-                  <li><a href="search.php">Search Page?</a></li>
-               </ul>
-            </div>
-            <div class="category">
-               <div class="title">User</div>
-               <ul>
-                  <li><a href="user.php">User Page</a></li>
-                  <li><a href="loginRegisterPage.php">Login/Register</a></li>
-               </ul>
-            </div>
-            <div class="category">
-               <div class="title">About</div>
-               <ul>
-                  <li><a rel="nofollow" href="about_us.php">About Us</a></li>
-               </ul>
-            </div>
-            <div class="category">
-               <div class="title">Get in touch</div>
-               <ul>
-                  <li><span class="icons sprite-mail"></span>&nbsp;<a href="contact_us.php">Contact Us</a></li>
-               </ul>
-            </div>
-         </div>
-      </div>
-      <div class="copyright">
-         <div class="width900">
-            <center>
-            &copy; 2013 TBA -- Bandom
-            </center>
-         </div>
-      </div>
-   </div>
+<div class="footer" style="width:100%; float:left; margin-top:20px;">
+	<div class="links">
+		<div class="width900">
+			<div class="category">
+				<div class="title">User</div>
+				<ul>
+					<li><?php echo $this->Html->link('User Page', array('controller'=>'Users','action'=>'index')); ?></li>
+					<li><?php echo $this->Html->link('Login/Register', array('controller'=>'Loginregister','action'=>'index')); ?></li>
+				</ul>
+			</div>
+			<div class="category">
+				<div class="title">Band</div>
+				<ul>
+					<li><?php echo $this->Html->link('Add Band', array('controller'=>'Bands','action'=>'create')); ?></li>
+				</ul>
+			</div>
+			<div class="category">
+				<div class="title">About</div>
+				<ul>
+					<li><?php echo $this->Html->link('About Us', array('controller'=>'Pages','action'=>'aboutus')); ?></li>
+					<li><?php echo $this->Html->link('Contact Us', array('controller'=>'Pages','action'=>'contact')); ?></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="copyright">
+		<div class="width900">
+			<center>
+			&copy; 2013 TBA -- Bandom
+			</center>
+		</div>
+	</div>
+</div>
 </body>
 </html>

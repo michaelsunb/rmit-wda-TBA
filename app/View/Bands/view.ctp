@@ -1,4 +1,4 @@
-<!-- File: /app/View/Bands/view.ctp -->
+<?php echo $this->Html->script('jquery', FALSE); ?>
 <div class="list-container-side">
    <h2 style="padding-top:0px"><?= $band['Band']['band_name']; ?></h2>
    <h4 style="padding-top:4px"><?= $band['Genre']['name']; ?></h4>
@@ -37,33 +37,37 @@ if($band['Band']['official_site'] or $band['Band']['twitter']
 ?>
 <div class="list-container-side">
    <h4 style="padding-top:0px">Links</h4>
-   <ul>
    <?php
    if($band['Band']['official_site'])
    {
-      echo "Official Site: ";
+      echo "<p>Official Site: ";
       echo $this->Html->link($band['Band']['official_site'] , $band['Band']['official_site']);
-      echo "<br>";
+      echo "</p>";
    }
    if($band['Band']['twitter'])
    {
-      echo "Twitter: ";
+      echo "<p>Twitter: ";
       echo $this->Html->link($band['Band']['twitter'] ,$band['Band']['twitter']);
-      echo "<br>";
+      echo "</p>";
    }
    if($band['Band']['facebook'])
    {
-      echo "Facebook: ";
+      echo "<p>Facebook: ";
       echo $this->Html->link($band['Band']['facebook'] , $band['Band']['facebook']);
-      echo "<br>";
+      echo "</p>";
    }
    if($admin == 0 )
    {
-      echo $this->Html->link("Subscribe" , array('controller' => 'bands', 
-         'action' => 'subscribe', $band['Band']['id']));
+      echo '<p id="sending">';
+      echo $this->Js->link('Subscribe',
+         array('action' => 'subscribe',$band['Band']['id']),
+         array(
+            'update'=>'#sending'
+         )
+      );
+      echo "</p>";
    }
    ?>
-   </ul>
 </div>
 <?php } ?>
 <div class="forum-container">

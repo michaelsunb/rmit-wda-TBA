@@ -2,68 +2,122 @@
 <?php
 class BandsController extends AppController
 {
-  public $helpers = array('Html','Form');
+   public $helpers = array('Html','Form','Js');
+   public $components = array('RequestHandler');
 
-  public function beforeFilter() {
-    parent::beforeFilter();
-    $this->Auth->allow('view');
-  }
+   public function beforeFilter() {
+      parent::beforeFilter();
+      $this->Auth->allow('view');
+      $this->Auth->allow('search');
+   }
 
-  public function isAuthorized($user) {
-    if ($this->action === 'create') {
-        return true;
-    }
-    if($this->action === 'subscribe')
-    {
-       return true;
-    }
-/*
-    if (in_array($this->action, array('edit', 'delete'))) {
-        $bandId = $this->request->params['pass'][0];
-        if ($this->Band->isOwnedBy($bandId, $user['id'])) {
-            return true;
-        }
-    }*///Havnt implemented a way to edit or delete bands yet
+   public function isAuthorized($user) {
+      if ($this->action === 'create' ||
+         $this->action === 'subscribe' ||
+         $this->action === 'search' ||
+         $this->action ==='index')
+      {
+         return true;
+      }
+      return parent::isAuthorized($user);
+   }
 
-    return parent::isAuthorized($user);
-}
+   function index()
+   {
+      $this->set('bands', $this->Band->find('all'));
+   }
 
     function create()
     {
-        $this->loadModel('Genre');
-        $genres = $this->Genre->find('list', array(
+      $this->loadModel('Genre');
+        
+      $genres = $this->Genre->find('list', array(
         'fields' => array('Genre.id', 'Genre.name')));
-        $this->set(compact('genres'));
+        
+      $this->set(compact('genres'));
 
-        if($this->request->is('post'))
-        {
-            $this->Band->create();
-            if($this->Band->save($this->request->data))
+      if($this->request->is('post'))
+      {
+         $this->Band->create();
+
+         //Fetch field inputs for validation
+         $data = array(
+            'band_name' => $this->request->data['band_name'],
+            'genre_id' => $this->request->data['genre_id'],
+            'band_info' => $this->request->data['band_info'],
+            'official_site' => $this->request->data['official_site'],
+            );
+
+			//Check for facebook and twitter inputs - if they exist, perform concatenation
+			if(strlen ($this->request->data['facebook']) != 0){
+				$data['facebook'] = 'https://www.facebook.com/'.$this->request->data['facebook'];
+         }
+
+			if(strlen ($this->request->data['twitter']) != 0){
+            $data['twitter'] = 'https://www.twitter.com/'.$this->request->data['twitter'];
+         }
+
+         if($this->Band->save($data))
+         {
+            if (CakeSession::read('Auth.User.id'))
             {
-                if (CakeSession::read('Auth.User.id'))
-                {
-                    $this->loadModel('Subscription');
-                    $sub_data = array("user_id" => CakeSession::read('Auth.User.id'), 
-                                      "band_id" => $this->Band->id,
-                                      "role_id" => 2);
-                    $this->Subscription->save($sub_data);
-                }
-
-                return $this->redirect(array('action' => 'view',
-                $this->request->data('id')));
+               $this->loadModel('Subscription');
+               $sub_data = array("user_id" => CakeSession::read('Auth.User.id'), 
+                                "band_id" => $this->Band->id,
+                                "role_id" => 2);
+               $this->Subscription->save($sub_data);
             }
-        }
-    }
+
+            return $this->redirect(array('action' => 'view',
+            $this->request->data('id')));
+         }
+      }
+   }
 
    function view($band_id = null)
    {
+      $user_id = CakeSession::read('Auth.User.id');
       if($band_id == null)
       {
         return $this->redirect(array('controller' => 'users',
-                      'action' => 'index',CakeSession::read('Auth.User.id')));
+                      'action' => 'index',$user_id));
+      }
+      
+      $band = $this->Band->findById($band_id);
+      if($band == null)
+      {
+        return $this->redirect(array('controller' => 'users',
+                      'action' => 'index',$user_id));
+      }
+      $this->set(compact('band'));
+
+      $this->loadModel('Subscription');
+      $subs = $this->Subscription->find('all', array(
+      'limit' => 1,
+      'conditions' => array('Subscription.user_id' => $user_id,
+         'Subscription.band_id' => $band_id),
+      'fields' => array('Role.id')));
+
+      $admin = 0;
+      if(isset($subs[0]['Role']['id']))
+      {
+         $admin = $subs[0]['Role']['id'];
+      }
+      $this->set(compact('admin'));
+   }
+
+   function search($search = null)
+   {
+      if($search == null && isset($this->params['url']['search']))
+      {
+         $search = $this->params['url']['search'];
       }
 
-      $this->set('band', $this->Band->findById($band_id));
+      $conditions = array("Band.band_name LIKE" => "%".$search."%");
+      $searches = $this->Band->find('list', array(
+      'conditions' => $conditions,
+      'fields' => array('Band.band_name','Band.band_info','Band.id')));
+      $this->set(compact('searches'));
    }
 
    function subscribe($band_id = null)
@@ -74,12 +128,23 @@ class BandsController extends AppController
         return $this->redirect(array('controller' => 'users',
                       'action' => 'index',$user_id));
       }
+      
+      $band = $this->Band->findById($band_id);
+      if($band == null)
+      {
+        return $this->redirect(array('controller' => 'users',
+                      'action' => 'index',$user_id));
+      }
+      $this->set(compact('band'));
 
       $this->loadModel('Subscription');
-      $this->Subscription->set(array('band_id' => $band_id,
-                                   'user_id' => $user_id,
-                                   'role_id' => 1));
-      $this->Subscription->save();
+      $this->Subscription->save(array('band_id' => $band_id,
+                                'user_id' => $user_id,
+                                'role_id' => 1),true);
+
+      if ($this->RequestHandler->isAjax()) {
+         $this->render('subscribe', 'ajax');
+      }
    }
 }
 ?>
