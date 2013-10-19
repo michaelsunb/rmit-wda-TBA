@@ -58,11 +58,11 @@ if($band['Band']['official_site'] or $band['Band']['twitter']
    }
    if($admin == 0 )
    {
-      echo '<p id="sending">';
+      echo '<p id="subscribe">';
       echo $this->Js->link('Subscribe',
          array('action' => 'subscribe',$band['Band']['id']),
          array(
-            'update'=>'#sending'
+            'update'=>'#subscribe'
          )
       );
       echo "</p>";
@@ -76,7 +76,6 @@ if($band['Band']['official_site'] or $band['Band']['twitter']
       'controller' => 'forums',
       'action' => 'create',
       $band['Band']['id']));?></h3>
-
    <?php
    foreach ($band['Forum'] as $forum)
    {

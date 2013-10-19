@@ -25,9 +25,9 @@ class User extends AppModel {
       if($this->isUnique($users,'user_email') &&
          $this->isUnique($users,'username'))
       {
-            $this->data[$this->alias]['password'] = 
-            AuthComponent::password($this->data[$this->alias]['password']);
-              return true;
+         $this->data[$this->alias]['password'] = 
+         AuthComponent::password($this->data[$this->alias]['password']);
+         return true;
       }
       return false;
    }
@@ -76,22 +76,21 @@ class User extends AppModel {
       )
    );
 
-function checkPassword($passwordInput){
-	$upperAlphaChars = '/[A-Z]/';
-   $lowerAlphaChars = '/[a-z]/';
-   $numbers = '/[0-9]/';
-   $nonAlphaChars = '/\W|_/';
+   function checkPassword($passwordInput){
+      $upperAlphaChars = '/[A-Z]/';
+      $lowerAlphaChars = '/[a-z]/';
+      $numbers = '/[0-9]/';
+      $nonAlphaChars = '/\W|_/';
 
-	$password = $passwordInput['password'];
-	
-	//Check password input against all expressions to make sure password is secure
-	if(preg_match($upperAlphaChars , $password) && preg_match($lowerAlphaChars , $password) &&
-			preg_match($numbers , $password) && preg_match($nonAlphaChars , $password)){
-		return true;
+      $password = $passwordInput['password'];
+      
+      //Check password input against all expressions to make sure password is secure
+      if(preg_match($upperAlphaChars , $password) && preg_match($lowerAlphaChars , $password) &&
+            preg_match($numbers , $password) && preg_match($nonAlphaChars , $password)){
+         return true;
+      }
+      else {
+         return false;
+      }
    }
-   else {
-      return false;
-   }
-}	
-	
 }
