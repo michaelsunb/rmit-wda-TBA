@@ -1,6 +1,7 @@
 <?php
 class Subscription extends AppModel
 {
+   /*Setting database model up for easier table joins on find */
    public $belongsTo = array('Band' => array('foreignKey' => 'band_id'),
                             'User' => array('foreignKey' => 'user_id'),
                             'Role' => array('foreignKey' => 'role_id'));

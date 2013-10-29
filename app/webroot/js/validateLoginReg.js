@@ -41,102 +41,138 @@ function resetMessages(){
    }
 }
 
+function checkUsername(username){
+
+	var usernamePattern = /^[a-zA-Z0-9]{6,}$/;
+	if(uppernamePattern.test(username)){
+		return true;
+       	}
+       	else return false;
+}
+
+
+//abstract function for both the login and register forms
+function checkPassword(password){
+        var upperAlphaChars = /[A-Z]/;
+        var lowerAlphaChars = /[a-z]/;
+        var numbers = /[0-9]/;
+        var nonalphaChars = /\W|_/;
+
+	//document.getElementById("loginUsernameError").innerHTML="Testing";
+   
+      	if(upperAlphaChars.test(password) && lowerAlphaChars.test(password) && 
+		numbers.test(password) && nonalphaChars.test(password) && password.length >= 6){
+	return true;
+        }
+       else return false;
+}  
+
 function loginUser(){
 	resetMessages();
 
-   var valid = 1;
-   var usernamePasswordPattern = /^[A-Za-z]{6,}./;
+	var valid = 1;
+   
+	//Check 'Username'
+ 	var usernameJs = document.getElementById("loginUsername").value;
 
-   //Check 'Password'
-   var usernameJs = document.getElementById("loginUsername").value;
-
-   if(usernameJs.length > 0){
-      if(!usernamePasswordPattern.test(usernameJs)){
-         valid = 0;
-         document.getElementById("loginUsernameError").innerHTML="Username must begin with a letter be at least six characters long";
-      }
-   }else{
-      valid = 0;
-      document.getElementById("loginUsernameError").innerHTML="You must enter a username";
-   }
+	if(usernameJs.length > 0){	
+   		if(!checkUsername(usernameJs)){
+         		valid = 0;
+        		document.getElementById("loginUsernameError").innerHTML="Username can only have alphanumeric characters, " 			
+			"and be at least six characters long";
+      		}
+   	}
+	else{
+      		valid = 0;
+     	 	document.getElementById("loginUsernameError").innerHTML="You must enter a username";
+   	}
 
    //Check 'Password'
    var passwordJs = document.getElementById("loginPassword").value;
 
    if(passwordJs.length > 0){
-      if(!usernamePasswordPattern.test(passwordJs)){
-         valid = 0;
-         document.getElementById("loginPasswordError").innerHTML=
-            "Password must begin with a letter and be at least six characters long";
-      }
-   }else{   
-      valid = 0;
-      document.getElementById("loginPasswordError").innerHTML="You must enter a password";
-   }
+	if(!checkPassword(passwordJs)){
+		valid = 0;
+       		document.getElementById("loginPasswordError").innerHTML=
+        	"Password must contain an uppercase letter, a lowercase letter, " +
+		"a number and a non-alphanumeric character, and be at least six characters long.";
+      	}
+   }	
+	else{   
+      		valid = 0;
+      		document.getElementById("loginPasswordError").innerHTML="You must enter a password";
+   	}
 
-   if (valid == 1){
-      document.getElementById("loginJs").submit();
-      return true;
-   }
-   return false;
+   	if (valid == 1){
+      		document.getElementById("loginJs").submit();
+     		return true;
+   		}
+   	else {return false;}
 }
 
 function registerUser(){
-   resetMessages();
-   var valid = 1;
-   var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-   var emailJs = document.getElementById("registerEmail").value;
+   	resetMessages();
+   	var valid = 1;
+   	var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+   	var emailJs = document.getElementById("registerEmail").value;
 
-   //Email must be a valid email address
-   if(emailJs.length > 0){
-      if(!emailPattern.test(emailJs)){
-         valid = 0;
-         document.getElementById("registerEmailError").innerHTML="Invalid email address";
-      }
-   }else{
-      valid = 0;
-      document.getElementById("registerEmailError").innerHTML="You must enter an email address";
-   }
+   	//Email must be a valid email address
+  	if(emailJs.length > 0){
+      		if(!emailPattern.test(emailJs)){
+         		valid = 0;
+       	  		document.getElementById("registerEmailError").innerHTML="Invalid email address";
+      		}
+   	}
 
-   //Username and password must both begin with a letter and be at least six characters long
-   //Check username
-   var usernamePasswordPattern = /^[A-Za-z]{6,}./;
-   var usernameJs = document.getElementById("registerUsername").value;
+	else{
+      		valid = 0;
+      		document.getElementById("registerEmailError").innerHTML="You must enter an email address";
+   		}
 
-   if(usernameJs.length > 0){
-      if(!usernamePasswordPattern.test(usernameJs)){
-         valid = 0;
-         document.getElementById("registerUsernameError").innerHTML="Username must begin with a letter and only contain alphanumeric characters";
-      }
-   }else{
-      valid = 0;
-      document.getElementById("registerUsernameError").innerHTML="You must enter username";
-   }
+   	//Check username
+   	var usernameJs = document.getElementById("registerUsername").value;
 
-   //Check 'Password' and 'Confirm Password'
-   var passwordJs = document.getElementById("registerPassword").value;
+   	if(usernameJs.length > 0){
+                if(!checkUsername(usernameJs)){
+                        valid = 0;
+                        document.getElementById("registerUsernameError").innerHTML="Password must contain an uppercase letter, a lowercase letter, " +
+                	"a number and a non-alphanumeric character, and be at least six characters long.";}
+        }
+        else{
+                valid = 0;
+                document.getElementById("registerUsernameError").innerHTML="You must enter a username";
+        }
 
-   if(passwordJs.length > 0){
-      if(!usernamePasswordPattern.test(passwordJs)){
-         valid = 0;
-         document.getElementById("registerPasswordError").innerHTML=
-         "Password must begin with a letter and be at least six characters long";
-      }
-      //Since we know that the 'Password' field has a value, we can Check that the 'Confirm Password' has the same value
-      var confirmPasswordJs = document.getElementById("registerPasswordConfirm").value;
-      if(passwordJs.localeCompare(confirmPasswordJs) != 0){
-         valid = 0;
-         document.getElementById("registerPasswordConfirmError").innerHTML="Passwords do not match";
-      }
-   }else{//If no password is entered
-      valid = 0;
-      document.getElementById("registerPasswordError").innerHTML="You must enter a password";
-   }
 
-   //If there were no input errors, then the form can be submitted
-   if(valid == 1){
-      document.getElementById("register").submit();
-      return true;
-   }
-   return false;
+	//Check password
+	var passwordJs = document.getElementById("registerPassword").value;
+
+   	if(passwordJs.length > 0){
+		if(!checkPassword(passwordJs)){
+			valid = 0;
+        		document.getElementById("registerPasswordError").innerHTML=
+        		"Password must contain an uppercase letter, a lowercase letter, " + 
+			"a number and a non-alphanumeric character, and be at least six characters long.";
+      			}
+
+		//Since we know that the 'Password' field has a value, we can Check that the 'Confirm Password' has the same value
+      		var confirmPasswordJs = document.getElementById("registerPasswordConfirm").value;
+      		if(passwordJs.localeCompare(confirmPasswordJs) != 0){
+        		valid = 0;
+         		document.getElementById("registerPasswordConfirmError").innerHTML="Passwords do not match";
+      			}
+   	
+	}
+
+	else{//If no password is entered
+      		valid = 0;
+      		document.getElementById("registerPasswordError").innerHTML="You must enter a password";
+  	}	
+
+	//If there were no input errors, then the form can be submitted
+   	if(valid == 1){
+      		document.getElementById("register").submit();
+      		return true;
+   		}
+   	else {return false;}
 }

@@ -1,7 +1,7 @@
 <?
 App::uses('AuthComponent', 'Controller/Component');
 class User extends AppModel {
-
+   /*Setting database up for easier table joins, Albums belong to bands.. etc*/
    public $hasMany = array('Subscription' => array('foreignKey' => 'user_id', 'dependent' => true),
                            'Post' => array('foreignKey' => 'user_id', 'dependent' => true));
 
@@ -32,6 +32,7 @@ class User extends AppModel {
       return false;
    }
 
+   /*requirements for validating a User Model fields*/
    public $validate = array(
 	'username' => array(
 		'required' => array(

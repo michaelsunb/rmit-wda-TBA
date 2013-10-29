@@ -40,11 +40,12 @@ class PagesController extends AppController {
       return parent::isAuthorized($user);
    }
 
-
+    /*Blank function for aboutus page*/
 	public function aboutus() {
 		//
 	}
 
+	/*Blank function for contact page*/
 	public function contact() {
 		//
 	}

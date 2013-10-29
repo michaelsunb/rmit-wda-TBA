@@ -33,27 +33,40 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 
-    public $components = array(
-        'Session',
-        'Auth' =>
-           array(
-              'authenticate' => array(
-                  'Form' => array(
-                      'userModel' => 'User',
-                      'fields' => array(
-                          'username' => 'username',
-                          'password' => 'password'
-                      )
-                  )
-       	       )
-            ),
-//            'loginRedirect' => array('controller' => 'loginregister', 'action' => 'index'),
-//            'logoutRedirect' => array('controller' => 'users', 'action' => 'login')
-    );
+   public $components = array(
+      'DebugKit.Toolbar',
+      'Session',
+      'Auth' =>
+      array(
+         'authorize' => array('Controller'),
+         'loginRedirect' => array('controller' => 'users', 'action' => 'index'),
+         'logoutRedirect' => array('controller' => 'loginregister', 'action' => 'index'),
+         'authenticate' => array(
+            'Form' => array(
+               'userModel' => 'User',
+               'fields' => array(
+                  'username' => 'username',
+                  'password' => 'password'
+               )
+            )
+         )
+      )
+   );
 
-    public function beforeFilter() {
-	$this->Auth->allow('index', 'view');
-        $this->Auth->allow('loginregister', 'add');
-        $this->set('authUser', $this->Auth->user());
-    }
+   /*Allow login and register pages to be viewed by all ppl.*/ 
+   public function beforeFilter() {
+         $this->Auth->allow('loginregister', 'add');
+         $this->Auth->allow('pages', 'aboutus');
+         $this->Auth->allow('pages', 'contact');
+         $this->set('authUser', $this->Auth->user());
+   }
+
+	/*Admin users are authorised always. :) */
+   public function isAuthorized($user)
+   {
+      if (isset($user['admin']) && $user['admin'] === true) {
+         return true;
+      }
+      return false;
+   }
 }

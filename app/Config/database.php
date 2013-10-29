@@ -66,7 +66,7 @@ class DATABASE_CONFIG {
 		'persistent' => false,
 		'host' => 'localhost',
 		'login' => 'webadmin',
-		'password' => 'h6gb',
+		'password' => 'root',
 		'database' => 'bandom_db',
 		'prefix' => '',
 		//'encoding' => 'utf8',

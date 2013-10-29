@@ -4,13 +4,13 @@ class BandsController extends AppController
 {
    public $helpers = array('Html','Form','Js');
    public $components = array('RequestHandler');
-
+   /*Allow non logged in users to view and search Bands*/
    public function beforeFilter() {
       parent::beforeFilter();
       $this->Auth->allow('view');
       $this->Auth->allow('search');
    }
-
+   /*Allow all logged in users to create subscribe and view index*/
    public function isAuthorized($user) {
       if ($this->action === 'create' ||
          $this->action === 'subscribe' ||
@@ -22,11 +22,13 @@ class BandsController extends AppController
       return parent::isAuthorized($user);
    }
 
+   /*View all bands on index page*/
    function index()
    {
       $this->set('bands', $this->Band->find('all'));
    }
 
+   /*Create a band*/
     function create()
     {
       $this->loadModel('Genre');
@@ -57,6 +59,7 @@ class BandsController extends AppController
             $data['twitter'] = 'https://www.twitter.com/'.$this->request->data['twitter'];
          }
 
+		 /*Saves the data */
          if($this->Band->save($data))
          {
             if (CakeSession::read('Auth.User.id'))
@@ -120,6 +123,7 @@ class BandsController extends AppController
       $this->set(compact('searches'));
    }
 
+   /*Function createss a new subscribtion to a band with a user role*/
    function subscribe($band_id = null)
    {
       $user_id = CakeSession::read('Auth.User.id');

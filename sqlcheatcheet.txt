@@ -1,0 +1,16 @@
+#insert a band manually 
+
+INSERT INTO bands(band_name, band_info) VALUES ("Nirvana","Were awesome");
+
+
+#insert a thread,
+
+INSERT INTO forums(band_id,thread_title) VALUES(1, "How awesome are Nirvana, :/");
+
+#insert a post,
+INSERT INTO posts(user_id, thread_id, content) VALUES(1, 1, "Nirvana Are amazing");
+
+
+# I know these may break the schema at this stage i just need
+# something to be able to search for in the database. :) to be able to
+# work on.
